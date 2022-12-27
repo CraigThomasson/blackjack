@@ -3,7 +3,6 @@ deck = []
 $("#play").on("click", function() {
     console.log('playing')
     deck = creatDeck()
-    console.log("deck", deck)
     shuffle(deck)
     console.log("suffeled deck", deck)
 })
