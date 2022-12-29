@@ -1,6 +1,7 @@
 let deck = []
 let playerHand = []
 let shuffledDeck = []
+let playerTotal = 0
 
 $("#play").on("click", function() {
     console.log('playing')
@@ -51,3 +52,4 @@ function firstHand(ShuffeldDeck) {
         );
     }
 }
+
