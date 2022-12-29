@@ -1,10 +1,13 @@
 deck = []
+playerHand = []
+let shuffledDeck = []
 
 $("#play").on("click", function() {
     console.log('playing')
     deck = creatDeck()
-    shuffle(deck)
-    console.log("suffeled deck", deck)
+    shuffledDeck = shuffle(deck)
+    console.log("suffeled deck", shuffledDeck)
+    firstHand(deck, playerHand)
 })
 
 function creatDeck() {
@@ -28,4 +31,13 @@ function shuffle(array) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
     }
+}
+
+// deals players first hand
+function firstHand(ShuffeldDeck, playerHand) {
+    for(let i = 0; i > 2; i++) {
+        let card = ShuffeldDeck.pop()
+        playerHand.push(card)
+    }
+    console.log("player hand", playerHand)
 }
