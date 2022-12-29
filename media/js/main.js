@@ -1,5 +1,5 @@
-deck = []
-playerHand = []
+let deck = []
+let playerHand = []
 let shuffledDeck = []
 
 $("#play").on("click", function() {
@@ -7,9 +7,10 @@ $("#play").on("click", function() {
     deck = creatDeck()
     shuffledDeck = shuffle(deck)
     console.log("suffeled deck", shuffledDeck)
-    firstHand(deck, playerHand)
+    firstHand(shuffledDeck)
 })
 
+// creates an array of 52 playing cards 
 function creatDeck() {
     let values = ["A","2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
     let suits = ["C", "D", "H", "S"];
@@ -21,7 +22,7 @@ function creatDeck() {
             deck.push(values[valuesCount] + "-" + suits[suitsCount])
         }
     }
-    return(deck)
+    return deck
 }
 
 // fisher-yeats shuffle
@@ -31,13 +32,22 @@ function shuffle(array) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
     }
+    return array
 }
 
 // deals players first hand
-function firstHand(ShuffeldDeck, playerHand) {
-    for(let i = 0; i > 2; i++) {
+function firstHand(ShuffeldDeck) {
+    for(let i = 0; i < 2; i++) {
         let card = ShuffeldDeck.pop()
+        console.log("card", card)
         playerHand.push(card)
     }
     console.log("player hand", playerHand)
+
+    for(let i = 0; i < playerHand.length; i++) {
+        let img = playerHand[i]
+        $( "#card-container" ).append( 
+            `<div class="col-3 card playing-card"><img class="card-img" src="media/images/cards/${img}.png" alt=""></div>`
+        );
+    }
 }
