@@ -75,10 +75,11 @@ function getPlayerScore(playerHand) {
             values.push(cardValue);
         }
         console.log(values)
-        let sum = values.reduce(function(a, b){
+        let playerTotal = values.reduce(function(a, b){
             return a + b;
         }, 0);
-        console.log(sum)
+        $( "#player-total" ).html(playerTotal)
         console.log(ace)
+
     }
 }
