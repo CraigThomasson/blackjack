@@ -3,6 +3,7 @@ let playerHand = []
 let shuffledDeck = []
 let playerTotal = 0
 let ace = false
+let aceCount = 0
 
 $("#play").on("click", function() {
     console.log('playing');
@@ -68,18 +69,29 @@ function getPlayerScore(playerHand) {
             values.push(cardValue);
         } else if(cardValue === "A") {
             cardValue = 11;
-            ace = true
+            ace = true;
+            aceCount ++;
             values.push(cardValue);
         } else {
-            cardValue = parseInt(cardValue)
+            cardValue = parseInt(cardValue);
             values.push(cardValue);
         }
-        console.log(values)
+        console.log(values);
         let playerTotal = values.reduce(function(a, b){
             return a + b;
         }, 0);
-        $( "#player-total" ).html(playerTotal)
-        console.log(ace)
-
+        $( "#player-total" ).html(playerTotal);
+        console.log(ace);
+        console.log(aceCount);
     }
+}
+
+function checkScore(playerTotal) {
+    if(playerTotal === 21) {
+        playerWin()
+    }
+}
+
+function playerWin() {
+    //
 }
