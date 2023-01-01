@@ -1,12 +1,20 @@
-let deck = []
-let playerHand = []
-let shuffledDeck = []
-let playerTotal = 0
-let ace = false
-let aceCount = 0
+let deck = [];
+let playerHand = [];
+let shuffledDeck = [];
+let playerTotal = 0;
+let ace = false;
+let aceCount = 0;
 
 $("#play").on("click", function() {
-    testRun()
+    testRun();
+})
+
+// $("#hit").on("click", function() {
+//     hit(shuffledDeck);
+// })
+
+$("#stick").on("click", function() {
+    stick();
 })
 
 // creates an array of 52 playing cards 
@@ -44,7 +52,7 @@ function firstHand(ShuffeldDeck) {
     console.log("player hand", playerHand);
 
     for(let i = 0; i < playerHand.length; i++) {
-        let img = playerHand[i]
+        let img = playerHand[i];
         $( "#card-container" ).append( 
             `<div class="col-3 card playing-card"><img class="card-img" src="media/images/cards/${img}.png" alt=""></div>`
         );
@@ -84,9 +92,42 @@ function getPlayerScore(playerHand) {
 }
 
 function checkScore(playerTotal) {
-    if(playerTotal ===21) {
-        playerWin()
+    if(playerTotal === 21) {
+        playerWin();
+    } else if(playerTotal < 21) {
+        hitOrStick();
     }
+}
+
+function hitOrStick() {
+    $("#hit").css({
+        display: "block"
+      });
+      $("#stick").css({
+        display: "block"
+      });
+      $("#play").css({
+        display: "none"
+      });
+}
+
+function stick() {
+
+}
+
+function hit(shuffledDeck) {
+    console.log('hit deck', shuffledDeck)
+    let card = shuffledDeck.pop();
+    console.log("card", card);
+    playerHand.push(card);
+    console.log("player hand", playerHand);
+
+    let img = card;
+    $( "#card-container" ).append( 
+        `<div class="col-3 card playing-card"><img class="card-img" src="media/images/cards/${img}.png" alt=""></div>`
+    );
+  
+    getPlayerScore(playerHand);
 }
 
 function playerWin() {
@@ -97,7 +138,6 @@ function playerWin() {
     $( "#main" ).html( 
     `<div id="winner" class="winner container"><div class="card">Well done you hit 21 <button id="play-again">Play Again</button></div></div>`
     );
-    
 }
 
 function run() {
@@ -115,15 +155,18 @@ function run() {
 }
 
 function testRun() {
-    let deck = []
+    
+    let deck = creatDeck();
     let playerHand = []
     let shuffledDeck = []
     let playerTotal = 0
     let ace = false
     let aceCount = 0
     console.log('playing');
-    deck = ['A-C', '10-H'];
     shuffledDeck = shuffle(deck);
     console.log("suffeled deck", shuffledDeck);
     firstHand(shuffledDeck);
+    $("#hit").on("click", function() {
+        hit(shuffledDeck);
+    });
 }
