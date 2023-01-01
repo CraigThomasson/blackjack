@@ -6,11 +6,7 @@ let ace = false
 let aceCount = 0
 
 $("#play").on("click", function() {
-    console.log('playing');
-    deck = creatDeck();
-    shuffledDeck = shuffle(deck);
-    console.log("suffeled deck", shuffledDeck);
-    firstHand(shuffledDeck);
+    testRun()
 })
 
 // creates an array of 52 playing cards 
@@ -83,11 +79,12 @@ function getPlayerScore(playerHand) {
         $( "#player-total" ).html(playerTotal);
         console.log(ace);
         console.log(aceCount);
+        checkScore(playerTotal);
     }
 }
 
 function checkScore(playerTotal) {
-    if(playerTotal === 21) {
+    if(playerTotal ===21) {
         playerWin()
     }
 }
@@ -97,8 +94,36 @@ function playerWin() {
         display: "none",
         visibility: "hidden"
       });
-    $( "#main" ).append( 
+    $( "#main" ).html( 
     `<div id="winner" class="winner container"><div class="card">Well done you hit 21 <button id="play-again">Play Again</button></div></div>`
     );
     
+}
+
+function run() {
+    let deck = []
+    let playerHand = []
+    let shuffledDeck = []
+    let playerTotal = 0
+    let ace = false
+    let aceCount = 0
+    console.log('playing');
+    deck = creatDeck();
+    shuffledDeck = shuffle(deck);
+    console.log("suffeled deck", shuffledDeck);
+    firstHand(shuffledDeck);
+}
+
+function testRun() {
+    let deck = []
+    let playerHand = []
+    let shuffledDeck = []
+    let playerTotal = 0
+    let ace = false
+    let aceCount = 0
+    console.log('playing');
+    deck = ['A-C', '10-H'];
+    shuffledDeck = shuffle(deck);
+    console.log("suffeled deck", shuffledDeck);
+    firstHand(shuffledDeck);
 }
