@@ -93,5 +93,12 @@ function checkScore(playerTotal) {
 }
 
 function playerWin() {
-    //
+    $("#game-board").css({
+        display: "none",
+        visibility: "hidden"
+      });
+    $( "#main" ).append( 
+    `<div id="winner" class="winner container"><div class="card">Well done you hit 21 <button id="play-again">Play Again</button></div></div>`
+    );
+    
 }
