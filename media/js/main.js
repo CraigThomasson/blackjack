@@ -144,7 +144,6 @@ function run() {
     let deck = []
     let playerHand = []
     let shuffledDeck = []
-    let playerTotal = 0
     let ace = false
     let aceCount = 0
     console.log('playing');
@@ -155,13 +154,8 @@ function run() {
 }
 
 function testRun() {
-    
     let deck = creatDeck();
-    let playerHand = []
     let shuffledDeck = []
-    let playerTotal = 0
-    let ace = false
-    let aceCount = 0
     console.log('playing');
     shuffledDeck = shuffle(deck);
     console.log("suffeled deck", shuffledDeck);
