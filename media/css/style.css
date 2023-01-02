@@ -6,3 +6,11 @@
 #hit, #stick {
     display: none;
 }
+
+#bust {
+    display: none;
+}
+
+#winner {
+    display: none;
+}

@@ -7,11 +7,12 @@ let aceCount = 0;
 
 $("#play").on("click", function() {
     testRun();
-})
+});
 
-// $("#hit").on("click", function() {
-//     hit(shuffledDeck);
-// })
+$(".play-again").on("click", function() {
+    console.log("reload")
+    location.reload();
+});
 
 $("#stick").on("click", function() {
     stick();
@@ -96,6 +97,8 @@ function checkScore(playerTotal) {
         playerWin();
     } else if(playerTotal < 21) {
         hitOrStick();
+    } if(playerTotal > 21) {
+        bust()
     }
 }
 
@@ -112,7 +115,7 @@ function hitOrStick() {
 }
 
 function stick() {
-
+    
 }
 
 function hit(shuffledDeck) {
@@ -131,13 +134,23 @@ function hit(shuffledDeck) {
 }
 
 function playerWin() {
-    $("#game-board").css({
+    $("#btn-container").css({
         display: "none",
         visibility: "hidden"
-      });
-    $( "#main" ).html( 
-    `<div id="winner" class="winner container"><div class="card">Well done you hit 21 <button id="play-again">Play Again</button></div></div>`
-    );
+    });
+    $("#winner" ).css({
+        display: "block"
+    });
+}
+
+function bust() {
+    $("#btn-container").css({
+        display: "none",
+        visibility: "hidden"
+    });
+    $("#bust" ).css({
+        display: "block"
+    });
 }
 
 function run() {

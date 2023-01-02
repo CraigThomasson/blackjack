@@ -23,17 +23,21 @@
         <!-- game board -->
         <div>
             <div id="game-board" class="container">
-                <div class="row">
-                    <button id="play" class="btn-success rounded text-dark m-1">PLAY</button>
-                    
+                <div id="message-container">
+                    <div id="bust" class="bust hide container"><div class="card">bad luck you went bust!<button class="play-again">Play Again</button></div></div>
+                    <div id="winner" class="winner hide container"><div class="card">Well done you hit 21 <button class="play-again">Play Again</button></div></div>
                 </div>
-                <div class="row">
-                    <button id="hit" class="btn-success rounded text-dark m-1">Hit</button>
-                    <button id="stick" class="btn-info rounded text-dark m-1">Stick</button>
-                    <div><p>Total: <span id="player-total">0</span></p></div>
+                <div id="btn-container">
+                    <div class="row">
+                        <button id="play" class="btn-success rounded text-dark m-1">PLAY</button>
+                    </div>
+                    <div class="row">
+                        <button id="hit" class="btn-success rounded text-dark m-1">Hit</button>
+                        <button id="stick" class="btn-info rounded text-dark m-1">Stick</button>
+                        <div><p>Total: <span id="player-total">0</span></p></div>
+                    </div>
                 </div>
-                <div id="card-container" class="row justify-content-center">
-                    
+                <div id="card-container" class="row justify-content-center">   
                 </div>
     
             </div>
