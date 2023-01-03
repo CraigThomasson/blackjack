@@ -89,21 +89,25 @@ function getPlayerScore(playerHand) {
         console.log(aceCount);
         checkScore(playerTotal);
     }
-    let aceArray = []
-    aceArray = []
-    for(i = 0; 1 < values.length; i++) {
-        aceArray.push(1)
-        aceCount = aceArray.length
+    let aceArray = [];
+    aceArray = [];
+    for(i = 0; i < values.length; i++) {
+        if(values[i] === 11) {
+            aceArray.push(values[i]);
+            aceCount = aceArray.length;
+            console.log("ace array", aceArray)
+        }
     }
 }
 
 function checkScore(playerTotal) {
+    console.log(playerTotal)
     if(playerTotal === 21) {
         playerWin();
     } else if(playerTotal < 21) {
         hitOrStick();
     } if(playerTotal > 21) {
-        bust()
+        checkAce();
     }
 }
 
@@ -158,6 +162,17 @@ function bust() {
     });
 }
 
+function checkAce(){
+    console.log("checking for aces")
+    if(ace) {
+        playerTotal = playerTotal - 10
+        aceCount = aceCount--
+        checkScore(playerTotal)
+    } else {
+        bust()
+    }
+} 
+
 function run() {
     let deck = []
     let playerHand = []
@@ -173,7 +188,8 @@ function run() {
 
 function testRun() {
     let deck = creatDeck();
-    let shuffledDeck = []
+    deck = ['A-S', 'A-H', "A-C", "A-D", "10-H", '10-D'];
+    let shuffledDeck = [];
     console.log('playing');
     shuffledDeck = shuffle(deck);
     console.log("suffeled deck", shuffledDeck);
