@@ -75,7 +75,6 @@ function getPlayerScore(playerHand) {
         } else if(cardValue === "A") {
             cardValue = 11;
             ace = true;
-            aceCount ++;
             values.push(cardValue);
         } else {
             cardValue = parseInt(cardValue);
@@ -89,6 +88,12 @@ function getPlayerScore(playerHand) {
         console.log(ace);
         console.log(aceCount);
         checkScore(playerTotal);
+    }
+    let aceArray = []
+    aceArray = []
+    for(i = 0; 1 < values.length; i++) {
+        aceArray.push(1)
+        aceCount = aceArray.length
     }
 }
 
