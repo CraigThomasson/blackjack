@@ -6,7 +6,7 @@ let ace = false;
 let aceCount = 0;
 
 $("#play").on("click", function() {
-    testRun();
+    Run();
 });
 
 $(".play-again").on("click", function() {
@@ -14,9 +14,7 @@ $(".play-again").on("click", function() {
     location.reload();
 });
 
-$("#stick").on("click", function() {
-    stick();
-})
+
 
 // creates an array of 52 playing cards 
 function creatDeck() {
@@ -97,16 +95,23 @@ function getPlayerScore(playerHand) {
 
 function checkScore(playerTotal, playerHand) {
     console.log("player total", playerTotal)
+    console.log(ace)
     if(playerTotal === 21) {
         playerWin();
     } else if(playerTotal < 21) {
         hitOrStick(playerTotal);
         return playerHand
     } if(playerTotal > 21) {
+        console.log("total is bust")
         if(ace) {
             let aceList = ["A-H", "A-C", "A-D", "A-S"]
             console.log("pre ace player hand", playerHand)
             for(let i = 0; i < playerHand.length; i++) {
+                console.log(playerHand[i])
+                if(!playerHand.some(r=> aceList.indexOf(r) >= 0)){
+                    bust(playerTotal)
+                    return playerHand
+                }
                 if(aceList.includes(playerHand[i])) {
                     let card = playerHand[i]
                     let cardSplit = card.split("-")
@@ -116,15 +121,13 @@ function checkScore(playerTotal, playerHand) {
                     console.log("small ace player hand", playerHand)
                     i = playerHand.length
                     return playerHand
-                } else {
-                    bust()
-                    return playerHand
                 }
             }
-            console.log(ace);`  `
+            console.log(ace);
         } else {
             console.log("busting")
-            bust()
+            bust(playerTotal)
+            return playerHand
         }
     }
 }
@@ -142,7 +145,7 @@ function hitOrStick(playerTotal) {
 }
 
 function stick() {
-    
+    computerTurn()
 }
 
 function hit(shuffledDeck) {
@@ -169,7 +172,7 @@ function playerWin() {
     });
 }
 
-function bust() {
+function bust(playerTotal) {
     $("#btn-container").css({
         display: "none",
         visibility: "hidden"
@@ -177,28 +180,15 @@ function bust() {
     $("#bust" ).css({
         display: "block"
     });
+    $( "#bust-total" ).html(playerTotal);
 }
 
-function run() {
-    let deck = []
-    let playerHand = []
-    let shuffledDeck = []
-    let ace = false
-    let aceCount = 0
-    console.log('playing');
-    deck = creatDeck();
-    shuffledDeck = shuffle(deck);
-    console.log("suffeled deck", shuffledDeck);
-    firstHand(shuffledDeck);
-}
-
-function testRun() {
+function Run() {
     let deck = creatDeck();
-    deck = ["2-S", "2-H", 'J-D', '9-D' , 'A-H'];
     let shuffledDeck = [];
     console.log('playing');
-    //shuffledDeck = shuffle(deck);
-    shuffledDeck = deck
+    shuffledDeck = shuffle(deck);
+    // shuffledDeck = ["10-H", "10-D", "2-D", "4-H" ,"A-S", "A-H", "2-H"]
     console.log("suffeled deck", shuffledDeck);
     playerHand = firstHand(shuffledDeck);
     playerTotal = getPlayerScore(playerHand)
@@ -208,7 +198,6 @@ function testRun() {
     $("#hit").on("click", function() {
         hit(shuffledDeck);
     });
-    
 }
 
 function hitLoop(playerHand) {
@@ -219,4 +208,10 @@ function hitLoop(playerHand) {
     playerTotal = getPlayerScore(playerHand)
     console.log("checkpoint 3")
     playerHand = checkScore(playerTotal ,playerHand)
+}
+
+function computerTurn() {
+    console.log("sticking")
+    console.log(playerTotal)
+    console.log(shuffledDeck)
 }
