@@ -42,9 +42,9 @@ function shuffle(array) {
 }
 
 // deals players first hand
-function firstHand(ShuffeldDeck) {
+function firstHand(shuffeldDeck) {
     for(let i = 0; i < 2; i++) {
-        let card = ShuffeldDeck.pop();
+        let card = shuffeldDeck.pop();
         console.log("card", card);
         playerHand.push(card);
     }
@@ -145,7 +145,14 @@ function hitOrStick(playerTotal) {
 }
 
 function stick() {
-    computerTurn()
+    $("#btn-container").css({
+        display: "none",
+        visibility: "hidden"
+    });
+    $("#stick-message" ).css({
+        display: "block"
+    });
+    $( "#stick-total" ).html(playerTotal);
 }
 
 function hit(shuffledDeck) {
@@ -198,6 +205,9 @@ function Run() {
     $("#hit").on("click", function() {
         hit(shuffledDeck);
     });
+    $("#stick").on("click", function() {
+        stick();
+    });
 }
 
 function hitLoop(playerHand) {
@@ -208,10 +218,4 @@ function hitLoop(playerHand) {
     playerTotal = getPlayerScore(playerHand)
     console.log("checkpoint 3")
     playerHand = checkScore(playerTotal ,playerHand)
-}
-
-function computerTurn() {
-    console.log("sticking")
-    console.log(playerTotal)
-    console.log(shuffledDeck)
 }
