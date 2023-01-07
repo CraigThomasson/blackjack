@@ -58,7 +58,8 @@ function firstHand(ShuffeldDeck) {
             `<div class="col-3 card playing-card"><img class="card-img" src="media/images/cards/${img}.png" alt=""></div>`
         );
     }
-    getPlayerScore(playerHand);
+    return playerHand
+    // getPlayerScore(playerHand);
 }
 
 // calculates the player score from playerHand and updates the total on index.html
@@ -76,42 +77,59 @@ function getPlayerScore(playerHand) {
             cardValue = 11;
             ace = true;
             values.push(cardValue);
+        } else if(cardValue === "a") {
+            cardValue = 1;
+            values.push(cardValue);
         } else {
             cardValue = parseInt(cardValue);
             values.push(cardValue);
         }
         console.log(values);
-        let playerTotal = values.reduce(function(a, b){
-            return a + b;
-        }, 0);
-        $( "#player-total" ).html(playerTotal);
-        console.log(ace);
-        console.log(aceCount);
-        checkScore(playerTotal);
+        console.log(aceCount); 
     }
-    let aceArray = [];
-    aceArray = [];
-    for(i = 0; i < values.length; i++) {
-        if(values[i] === 11) {
-            aceArray.push(values[i]);
-            aceCount = aceArray.length;
-            console.log("ace array", aceArray)
+
+    let playerTotal = values.reduce(function(a, b){
+        return a + b;
+    }, 0);
+    $( "#player-total" ).html(playerTotal);
+    return playerTotal
+}
+
+function checkScore(playerTotal, playerHand) {
+    console.log("player total", playerTotal)
+    if(playerTotal === 21) {
+        playerWin();
+    } else if(playerTotal < 21) {
+        hitOrStick(playerTotal);
+        return playerHand
+    } if(playerTotal > 21) {
+        if(ace) {
+            let aceList = ["A-H", "A-C", "A-D", "A-S"]
+            console.log("pre ace player hand", playerHand)
+            for(let i = 0; i < playerHand.length; i++) {
+                if(aceList.includes(playerHand[i])) {
+                    let card = playerHand[i]
+                    let cardSplit = card.split("-")
+                    let cardSuit = cardSplit[1]
+                    let newCard = ["a-" + cardSuit]
+                    playerHand[i] = newCard[0]
+                    console.log("small ace player hand", playerHand)
+                    i = playerHand.length
+                    return playerHand
+                } else {
+                    bust()
+                    return playerHand
+                }
+            }
+            console.log(ace);`  `
+        } else {
+            console.log("busting")
+            bust()
         }
     }
 }
 
-function checkScore(playerTotal) {
-    console.log(playerTotal)
-    if(playerTotal === 21) {
-        playerWin();
-    } else if(playerTotal < 21) {
-        hitOrStick();
-    } if(playerTotal > 21) {
-        checkAce();
-    }
-}
-
-function hitOrStick() {
+function hitOrStick(playerTotal) {
     $("#hit").css({
         display: "block"
       });
@@ -132,14 +150,13 @@ function hit(shuffledDeck) {
     let card = shuffledDeck.pop();
     console.log("card", card);
     playerHand.push(card);
-    console.log("player hand", playerHand);
+    console.log("player hand after hit", playerHand);
 
     let img = card;
     $( "#card-container" ).append( 
         `<div class="col-3 card playing-card"><img class="card-img" src="media/images/cards/${img}.png" alt=""></div>`
     );
-  
-    getPlayerScore(playerHand);
+    hitLoop(playerHand)
 }
 
 function playerWin() {
@@ -162,17 +179,6 @@ function bust() {
     });
 }
 
-function checkAce(){
-    console.log("checking for aces")
-    if(ace) {
-        playerTotal = playerTotal - 10
-        aceCount = aceCount--
-        checkScore(playerTotal)
-    } else {
-        bust()
-    }
-} 
-
 function run() {
     let deck = []
     let playerHand = []
@@ -188,13 +194,29 @@ function run() {
 
 function testRun() {
     let deck = creatDeck();
-    deck = ['A-S', 'A-H', "A-C", "A-D", "10-H", '10-D'];
+    deck = ["2-S", "2-H", 'J-D', '9-D' , 'A-H'];
     let shuffledDeck = [];
     console.log('playing');
-    shuffledDeck = shuffle(deck);
+    //shuffledDeck = shuffle(deck);
+    shuffledDeck = deck
     console.log("suffeled deck", shuffledDeck);
-    firstHand(shuffledDeck);
+    playerHand = firstHand(shuffledDeck);
+    playerTotal = getPlayerScore(playerHand)
+    playerhand = checkScore(playerTotal, playerHand)
+    playerTotal = getPlayerScore(playerHand)
+    playerhand = checkScore(playerTotal, playerHand)
     $("#hit").on("click", function() {
         hit(shuffledDeck);
     });
+    
+}
+
+function hitLoop(playerHand) {
+    playerTotal = getPlayerScore(playerHand)
+    console.log("checkpoint 1")
+    playerHand = checkScore(playerTotal ,playerHand)
+    console.log("checkpoint 2")
+    playerTotal = getPlayerScore(playerHand)
+    console.log("checkpoint 3")
+    playerHand = checkScore(playerTotal ,playerHand)
 }
